@@ -170,7 +170,7 @@ if(DARKNET_CUDA)
   )
   target_compile_definitions(darknet PUBLIC GPU=1)
   target_link_libraries(darknet PUBLIC
-    cuda cudart cublas curand
+    cuda cublas /usr/local/cuda/lib64/libcurand.so /usr/local/cuda/lib64/libcudart.so
   )
 else()  # not using CUDA
   add_library(darknet SHARED ${darknet_lib_c_sources} ${darknet_lib_cpp_sources})
