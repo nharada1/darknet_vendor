@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 project(darknet_vendor VERSION 0.1.0)
+add_compile_options(-w)
 
 ####################
 # Build options
@@ -19,11 +20,11 @@ else()
 endif()
 
 # Same version as Debian Buster
-set(darknet_git_tag "61c9d02ec461e30d55762ec7669d6a1d3c356fb2")
+set(darknet_git_tag "ac8ebca0639f445ae456a1da05a13496ae0fcdc2")
 
 FetchContent_Declare(darknet-download
   GIT_REPOSITORY
-    "https://github.com/pjreddie/darknet.git"
+    "https://github.com/AlexeyAB/darknet.git"
   GIT_TAG
     ${darknet_git_tag}
 )
@@ -53,26 +54,7 @@ set(darknet_cuda_sources
   "${darknet_src_dir}/src/dropout_layer_kernels.cu"
   "${darknet_src_dir}/src/im2col_kernels.cu"
   "${darknet_src_dir}/src/maxpool_layer_kernels.cu"
-)
-
-set(darknet_exec_c_sources
-  "${darknet_src_dir}/examples/art.c"
-  "${darknet_src_dir}/examples/captcha.c"
-  "${darknet_src_dir}/examples/cifar.c"
-  "${darknet_src_dir}/examples/classifier.c"
-  "${darknet_src_dir}/examples/coco.c"
-  "${darknet_src_dir}/examples/darknet.c"
-  "${darknet_src_dir}/examples/detector.c"
-  "${darknet_src_dir}/examples/go.c"
-  "${darknet_src_dir}/examples/instance-segmenter.c"
-  "${darknet_src_dir}/examples/lsd.c"
-  "${darknet_src_dir}/examples/nightmare.c"
-  "${darknet_src_dir}/examples/super.c"
-  "${darknet_src_dir}/examples/rnn.c"
-  "${darknet_src_dir}/examples/regressor.c"
-  "${darknet_src_dir}/examples/segmenter.c"
-  "${darknet_src_dir}/examples/tag.c"
-  "${darknet_src_dir}/examples/yolo.c"
+  "${darknet_src_dir}/src/network_kernels.cu"
 )
 
 set(darknet_lib_cpp_sources
@@ -82,50 +64,79 @@ set(darknet_lib_cpp_sources
 set(darknet_lib_c_sources
   "${darknet_src_dir}/src/activation_layer.c"
   "${darknet_src_dir}/src/activations.c"
+  "${darknet_src_dir}/src/art.c"
   "${darknet_src_dir}/src/avgpool_layer.c"
   "${darknet_src_dir}/src/batchnorm_layer.c"
   "${darknet_src_dir}/src/blas.c"
   "${darknet_src_dir}/src/box.c"
+  "${darknet_src_dir}/src/captcha.c"
+  "${darknet_src_dir}/src/cifar.c"
+  "${darknet_src_dir}/src/classifier.c"
+  "${darknet_src_dir}/src/coco.c"
   "${darknet_src_dir}/src/col2im.c"
-  # "${darknet_src_dir}/src/compare.c"
+  "${darknet_src_dir}/src/compare.c"
   "${darknet_src_dir}/src/connected_layer.c"
+  "${darknet_src_dir}/src/conv_lstm_layer.c"
   "${darknet_src_dir}/src/convolutional_layer.c"
   "${darknet_src_dir}/src/cost_layer.c"
+  "${darknet_src_dir}/src/cpu_gemm.c"
   "${darknet_src_dir}/src/crnn_layer.c"
   "${darknet_src_dir}/src/crop_layer.c"
-  "${darknet_src_dir}/src/cuda.c"
+  "${darknet_src_dir}/src/darknet.c"
+  "${darknet_src_dir}/src/dark_cuda.c"
   "${darknet_src_dir}/src/data.c"
   "${darknet_src_dir}/src/deconvolutional_layer.c"
   "${darknet_src_dir}/src/demo.c"
   "${darknet_src_dir}/src/detection_layer.c"
+  "${darknet_src_dir}/src/detector.c"
+  "${darknet_src_dir}/src/dice.c"
   "${darknet_src_dir}/src/dropout_layer.c"
+  "${darknet_src_dir}/src/gaussian_yolo_layer.c"
   "${darknet_src_dir}/src/gemm.c"
+  "${darknet_src_dir}/src/getopt.c"
+  "${darknet_src_dir}/src/gettimeofday.c"
+  "${darknet_src_dir}/src/go.c"
   "${darknet_src_dir}/src/gru_layer.c"
   "${darknet_src_dir}/src/im2col.c"
   "${darknet_src_dir}/src/image.c"
-  "${darknet_src_dir}/src/iseg_layer.c"
-  "${darknet_src_dir}/src/l2norm_layer.c"
   "${darknet_src_dir}/src/layer.c"
   "${darknet_src_dir}/src/list.c"
   "${darknet_src_dir}/src/local_layer.c"
-  "${darknet_src_dir}/src/logistic_layer.c"
   "${darknet_src_dir}/src/lstm_layer.c"
   "${darknet_src_dir}/src/matrix.c"
   "${darknet_src_dir}/src/maxpool_layer.c"
   "${darknet_src_dir}/src/network.c"
+  "${darknet_src_dir}/src/nightmare.c"
   "${darknet_src_dir}/src/normalization_layer.c"
   "${darknet_src_dir}/src/option_list.c"
   "${darknet_src_dir}/src/parser.c"
   "${darknet_src_dir}/src/region_layer.c"
   "${darknet_src_dir}/src/reorg_layer.c"
+  "${darknet_src_dir}/src/reorg_old_layer.c"
+  "${darknet_src_dir}/src/representation_layer.c"
+  "${darknet_src_dir}/src/rnn.c"
   "${darknet_src_dir}/src/rnn_layer.c"
+  "${darknet_src_dir}/src/rnn_vid.c"
   "${darknet_src_dir}/src/route_layer.c"
+  "${darknet_src_dir}/src/sam_layer.c"
+  "${darknet_src_dir}/src/scale_channels_layer.c"
   "${darknet_src_dir}/src/shortcut_layer.c"
   "${darknet_src_dir}/src/softmax_layer.c"
+  "${darknet_src_dir}/src/super.c"
+  "${darknet_src_dir}/src/swag.c"
+  "${darknet_src_dir}/src/tag.c"
   "${darknet_src_dir}/src/tree.c"
   "${darknet_src_dir}/src/upsample_layer.c"
   "${darknet_src_dir}/src/utils.c"
+  "${darknet_src_dir}/src/voxel.c"
+  "${darknet_src_dir}/src/writing.c"
+  "${darknet_src_dir}/src/yolo.c"
   "${darknet_src_dir}/src/yolo_layer.c"
+  # This package also has CPP files
+  "${darknet_src_dir}/src/http_stream.cpp"
+  "${darknet_src_dir}/src/image_opencv.cpp"
+  #"${darknet_src_dir}/src/yolo_console_dll.cpp"
+  "${darknet_src_dir}/src/yolo_v2_class.cpp"
 )
 
 ####################
@@ -177,9 +188,12 @@ else()  # not using CUDA
 endif()
 
 set_target_properties(darknet PROPERTIES LINKER_LANGUAGE C)
+target_compile_options(darknet PRIVATE -w)
+
 target_include_directories(darknet PUBLIC
   $<BUILD_INTERFACE:${darknet_src_dir}/include>
   $<BUILD_INTERFACE:${darknet_src_dir}/src>
+  $<BUILD_INTERFACE:${darknet_src_dir}/3rdparty/stb/include>
   $<INSTALL_INTERFACE:include>
 )
 
@@ -206,6 +220,8 @@ add_library(darknet_vendor INTERFACE)
 target_include_directories(darknet_vendor INTERFACE
   $<BUILD_INTERFACE:include>
   $<INSTALL_INTERFACE:include>
+  $<INSTALL_INTERFACE:3rdparty/stb/include>
+
 )
 target_link_libraries(darknet_vendor INTERFACE darknet)
 
@@ -214,7 +230,7 @@ configure_file("include/darknet_vendor/version.h.in" "version.h" @ONLY)
 ####################
 # Darknet Executable
 ####################
-add_executable(darknet_exec ${darknet_exec_c_sources})
+add_executable(darknet_exec ${darknet_lib_c_sources})
 target_link_libraries(darknet_exec PUBLIC darknet)
 set_target_properties(darknet_exec PROPERTIES OUTPUT_NAME "darknet")
 
@@ -304,7 +320,13 @@ install(
 )
 install(
   DIRECTORY
-    "${darknet_src_dir}/python"
+    "${darknet_src_dir}/3rdparty/stb/include"
+  DESTINATION
+    "3rdparty/stb/"
+)
+install(
+  FILES
+    "${darknet_src_dir}/darknet.py"
   DESTINATION
     "share/darknet"
 )
@@ -321,12 +343,6 @@ install(
 install(
   FILES
     "${darknet_src_dir}/LICENSE"
-    "${darknet_src_dir}/LICENSE.fuck"
-    "${darknet_src_dir}/LICENSE.gen"
-    "${darknet_src_dir}/LICENSE.gpl"
-    "${darknet_src_dir}/LICENSE.meta"
-    "${darknet_src_dir}/LICENSE.mit"
-    "${darknet_src_dir}/LICENSE.v1"
   DESTINATION
     "share/darknet"
 )

@@ -19,4 +19,3 @@
 #include <darknet_vendor/version.h>
 
 #endif  // DARKNET_VENDOR__DARKNET_VENDOR_H_
-
